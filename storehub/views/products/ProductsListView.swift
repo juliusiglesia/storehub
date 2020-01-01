@@ -17,12 +17,12 @@ struct ProductsListView: View {
         ZStack {
             NavigationView {
                 List {
-                    ForEach(self.storeHubData.productCatalog, id: \.self) { productCatalog in
-                        NavigationLink (destination: Text(productCatalog.product.wrappedName)) {
+                    ForEach(self.storeHubData.managers.productCatalog.data, id: \.self) { productCatalog in
+                        NavigationLink (destination: Text(productCatalog.product?.wrappedName ?? "??")) {
                             VStack(alignment: .leading) {
-                                Text(productCatalog.product.wrappedName)
+                                Text(productCatalog.product?.wrappedName ?? "??")
                                 Text("₱\(productCatalog.price?.sell.money ?? "??") per stock").foregroundColor(Color.gray)
-                                Text("99 stocks available").foregroundColor(Color.gray)
+                                Text("\(productCatalog.count) stocks available").foregroundColor(Color.gray)
                             }
                         }
                     }

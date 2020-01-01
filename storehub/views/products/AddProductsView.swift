@@ -94,13 +94,13 @@ struct AddProductsView: View {
             
             Section {
                 Button(action: {
-                    do {
-                        let category = self.storeHubData.managers.category.get(id: self.category.id)
-                        let product = try self.storeHubData.managers.product.add(name: self.name, category: category)
-                        try self.storeHubData.managers.price.save(product: product, cost: self.costPrice.number, sell: self.sellPrice.number)
-                    } catch {
-                        print("Error saving product")
-                    }
+                    self.storeHubData.addProduct(
+                        name: self.name,
+                        category: self.storeHubData.managers.category.get(id: self.category.id),
+                        noOfStocks: self.noOfStocks.number,
+                        costPrice: self.costPrice.number,
+                        sellPrice: self.sellPrice.number
+                    )
                 }) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")

@@ -30,7 +30,7 @@ class PriceDataManager: ObservableObject {
         }
     }
     
-    func save(product: Product, cost: Double, sell: Double) throws {
+    func save(product: Product, cost: Double, sell: Double) throws -> Price {
         var price = getByProduct(product: product)
         if price != nil {
             price!.cost = cost
@@ -46,6 +46,7 @@ class PriceDataManager: ObservableObject {
         
         try? context.save()
         refresh()
+        return price!
     }
     
     func getByProduct(product: Product) -> Price? {

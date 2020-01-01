@@ -23,7 +23,7 @@ struct AddCategoryView: View {
             
             Section {
                 Button(action: {
-                    self.storeHubData.managers.category.add(label: self.name)
+                    self.storeHubData.managers.category.save(label: self.name)
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
                     HStack {

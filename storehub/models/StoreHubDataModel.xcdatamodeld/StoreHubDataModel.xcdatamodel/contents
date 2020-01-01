@@ -17,6 +17,11 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category"/>
     </entity>
+    <entity name="ProductCatalog" representedClassName=".ProductCatalog" parentEntity="Record" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="price" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Price"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product"/>
+    </entity>
     <entity name="Record" representedClassName=".Record" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="createdBy" optional="YES" attributeType="String"/>
@@ -30,5 +35,6 @@
         <element name="Price" positionX="70.6015625" positionY="-263.5546875" width="128" height="88"/>
         <element name="PriceHistory" positionX="-177.32421875" positionY="-27.8359375" width="128" height="88"/>
         <element name="Record" positionX="-389.25" positionY="-56.78125" width="128" height="118"/>
+        <element name="ProductCatalog" positionX="-243" positionY="-117" width="128" height="88"/>
     </elements>
 </model>

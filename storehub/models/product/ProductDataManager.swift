@@ -28,7 +28,7 @@ class ProductDataManager: ObservableObject {
         }
     }
     
-    func add(name: String, category: Category?) throws -> Product {
+    func save(name: String, category: Category?) throws -> Product {
         let product = Product(context: context)
         product.name = name
         product.category = category

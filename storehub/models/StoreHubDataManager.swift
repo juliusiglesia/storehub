@@ -12,15 +12,14 @@ import Combine
 class StoreHubDataManager: ObservableObject {
     var managers: DataManagers
     
-    @Published var productCatalog: Array<ProductCatalog>!
-    
     internal var subscriptions: Array<AnyCancellable>!
     
     init() {
         self.managers = DataManagers(
             category: CategoryDataManager(),
             price: PriceDataManager(),
-            product: ProductDataManager()
+            product: ProductDataManager(),
+            productCatalog: ProductCatalogDataManager()
         )
         
         self.refresh()
@@ -32,6 +31,16 @@ class StoreHubDataManager: ObservableObject {
         ]
     }
     
+    public func addProduct(name: String, category: Category?, noOfStocks: Int, costPrice: Double, sellPrice: Double) {
+        do {
+            let product = try? self.managers.product.save(name: name, category: category)
+            let price = try? self.managers.price.save(product: product!, cost: costPrice, sell: sellPrice)
+            let _ = try? self.managers.productCatalog.add(count: noOfStocks, product: product!, price: price!)
+        } catch {
+            print("Error saving all product entities")
+        }
+    }
+    
     internal func asyncRefresh() {
         DispatchQueue.main.async {
             self.refresh()
@@ -39,10 +48,7 @@ class StoreHubDataManager: ObservableObject {
     }
     
     internal func refresh() {
-        self.productCatalog = self.managers.product.data.map {
-            let price = self.managers.price.getByProduct(product: $0)
-            return ProductCatalog(product: $0, price: price)
-        }
+        
     }
     
     deinit {
@@ -56,28 +62,13 @@ class DataManagers {
     var category: CategoryDataManager
     var price: PriceDataManager
     var product: ProductDataManager
+    var productCatalog: ProductCatalogDataManager
     
-    init(category: CategoryDataManager, price: PriceDataManager, product: ProductDataManager) {
+    init(category: CategoryDataManager, price: PriceDataManager, product: ProductDataManager, productCatalog: ProductCatalogDataManager) {
         self.category = category
         self.price = price
         self.product = product
+        self.productCatalog = productCatalog
     }
 }
 
-class ProductCatalog: Hashable, Identifiable {
-    var product: Product
-    var price: Price?
-    
-    init(product: Product, price: Price?) {
-        self.product = product
-        self.price = price
-    }
-    
-    static func == (lhs: ProductCatalog, rhs: ProductCatalog) -> Bool {
-        return lhs.product == rhs.product
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        product.hash(into: &hasher)
-    }
-}

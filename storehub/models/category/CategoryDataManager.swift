@@ -30,7 +30,7 @@ class CategoryDataManager: ObservableObject {
         }
     }
     
-    func add(label: String) {
+    func save(label: String) {
         let category = Category(context: context)
         category.label = label
         category.setCreateTimestamp()

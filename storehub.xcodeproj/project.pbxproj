@@ -38,6 +38,8 @@
 		3398E80623BC8DCA007C8DB7 /* PriceHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398E80523BC8DCA007C8DB7 /* PriceHistory.swift */; };
 		3398E80823BC8F62007C8DB7 /* PriceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398E80723BC8F62007C8DB7 /* PriceDataManager.swift */; };
 		3398E80D23BC9796007C8DB7 /* StoreHubDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398E80C23BC9796007C8DB7 /* StoreHubDataManager.swift */; };
+		3398E80F23BCA8E3007C8DB7 /* ProductCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398E80E23BCA8E3007C8DB7 /* ProductCatalog.swift */; };
+		3398E81123BCA98E007C8DB7 /* ProductCatalogDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3398E81023BCA98E007C8DB7 /* ProductCatalogDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,8 @@
 		3398E80523BC8DCA007C8DB7 /* PriceHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHistory.swift; sourceTree = "<group>"; };
 		3398E80723BC8F62007C8DB7 /* PriceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceDataManager.swift; sourceTree = "<group>"; };
 		3398E80C23BC9796007C8DB7 /* StoreHubDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreHubDataManager.swift; sourceTree = "<group>"; };
+		3398E80E23BCA8E3007C8DB7 /* ProductCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalog.swift; sourceTree = "<group>"; };
+		3398E81023BCA98E007C8DB7 /* ProductCatalogDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCatalogDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,7 +265,9 @@
 			isa = PBXGroup;
 			children = (
 				3398E7F123BA162A007C8DB7 /* Product.swift */,
+				3398E80E23BCA8E3007C8DB7 /* ProductCatalog.swift */,
 				3398E7F423BA164C007C8DB7 /* ProductDataManager.swift */,
+				3398E81023BCA98E007C8DB7 /* ProductCatalogDataManager.swift */,
 			);
 			path = product;
 			sourceTree = "<group>";
@@ -450,6 +456,7 @@
 				3319462A23B78BA200B1ADD5 /* ProductsListView.swift in Sources */,
 				331945FC23B78A1D00B1ADD5 /* ContentView.swift in Sources */,
 				3398E7F023B99445007C8DB7 /* FilteredValue.swift in Sources */,
+				3398E80F23BCA8E3007C8DB7 /* ProductCatalog.swift in Sources */,
 				3319463023B7A1EA00B1ADD5 /* SalesInfoView.swift in Sources */,
 				3319462823B78B7800B1ADD5 /* SalesListView.swift in Sources */,
 				3398E7ED23B8CA91007C8DB7 /* StoreHubDataModel.xcdatamodeld in Sources */,
@@ -458,6 +465,7 @@
 				3319463423B7A99900B1ADD5 /* AddProductsView.swift in Sources */,
 				3398E7FC23BA545A007C8DB7 /* Double.swift in Sources */,
 				331945F723B78A1D00B1ADD5 /* SceneDelegate.swift in Sources */,
+				3398E81123BCA98E007C8DB7 /* ProductCatalogDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
