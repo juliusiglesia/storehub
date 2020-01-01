@@ -1,5 +1,5 @@
 //
-//  CategoryModelManager.swift
+//  CategoryDataManager.swift
 //  storehub
 //
 //  Created by Julius Iglesia on 29/12/2019.
@@ -14,7 +14,7 @@ import Combine
 class CategoryDataManager: ObservableObject {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    @Published var categories: Array<Category> = []
+    @Published var data: Array<Category> = []
     @Published var pickerOptions: Array<ListPickerOption> = []
     
     init() {
@@ -23,8 +23,8 @@ class CategoryDataManager: ObservableObject {
     
     func refresh() {
         do {
-            self.categories = try context.fetch(Category.getAllCategoriesRequest())
-            self.pickerOptions = categories.map { .init(id: $0.wrappedId, label: $0.wrappedLabel) }
+            self.data = try context.fetch(Category.getAllCategoriesRequest())
+            self.pickerOptions = data.map { .init(id: $0.wrappedId, label: $0.wrappedLabel) }
         } catch {
             print("Error fetching categories, \(error)")
         }
@@ -32,8 +32,9 @@ class CategoryDataManager: ObservableObject {
     
     func add(label: String) {
         let category = Category(context: context)
-        category.id = UUID().uuidString
         category.label = label
+        category.setCreateTimestamp()
+        
         do {
             try context.save()
             refresh()
@@ -43,7 +44,7 @@ class CategoryDataManager: ObservableObject {
     }
     
     func get(id: String) -> Category? {
-        return self.categories.filter {
+        return self.data.filter {
             $0.wrappedId == id
         }.first
     }

@@ -9,13 +9,8 @@
 import Foundation
 import CoreData
 
-public class Category: NSManagedObject, Identifiable {
-    @NSManaged public var id: String?
+public class Category: Record {
     @NSManaged public var label: String?
-        
-    public var wrappedId: String {
-        id ?? "Unknown ID"
-    }
     
     public var wrappedLabel: String {
         label ?? "Unknown Category"

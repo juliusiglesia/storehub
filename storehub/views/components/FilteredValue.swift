@@ -36,12 +36,20 @@ public class FilteredValue: ObservableObject {
 }
 
 public class NumericValue: FilteredValue {
+    var number: Int {
+        Int(value) ?? 0
+    }
+
     init() {
         super.init(charset: CharacterSet(charactersIn: "1234567890"))
     }
 }
 
 public class DecimalValue: FilteredValue {
+    var number: Double {
+        Double(value) ?? 0
+    }
+    
     init() {
         super.init(charset: CharacterSet(charactersIn: "1234567890."))
     }

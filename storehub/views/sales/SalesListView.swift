@@ -1,5 +1,5 @@
 //
-//  SalesView.swift
+//  SalesListView.swift
 //  storehub
 //
 //  Created by Julius Iglesia on 28/12/2019.

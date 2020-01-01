@@ -9,14 +9,9 @@
 import Foundation
 import CoreData
 
-public class Product: NSManagedObject, Identifiable {
-    @NSManaged public var id: String?
+public class Product: Record {
     @NSManaged public var name: String?
     @NSManaged public var category: Category?
-    
-    public var wrappedId: String {
-        id ?? "Unknown ID"
-    }
     
     public var wrappedName: String {
         name ?? "Unknown Product"

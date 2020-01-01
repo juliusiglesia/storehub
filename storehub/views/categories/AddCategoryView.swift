@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 
 struct AddCategoryView: View {
-    @EnvironmentObject var categoryDataManager: CategoryDataManager
+    @EnvironmentObject var storeHubData: StoreHubDataManager
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @State private var name = ""
@@ -23,7 +23,7 @@ struct AddCategoryView: View {
             
             Section {
                 Button(action: {
-                    self.categoryDataManager.add(label: self.name)
+                    self.storeHubData.managers.category.add(label: self.name)
                     self.presentationMode.wrappedValue.dismiss()
                 }) {
                     HStack {

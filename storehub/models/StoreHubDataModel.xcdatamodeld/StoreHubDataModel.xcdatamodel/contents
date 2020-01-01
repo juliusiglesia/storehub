@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Category" representedClassName=".Category" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String"/>
+    <entity name="Category" representedClassName=".Category" parentEntity="Record" syncable="YES">
         <attribute name="label" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Product" representedClassName=".Product" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String"/>
+    <entity name="Price" representedClassName=".Price" parentEntity="Record" syncable="YES">
+        <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sell" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product"/>
+    </entity>
+    <entity name="PriceHistory" representedClassName=".PriceHistory" parentEntity="Record" syncable="YES">
+        <attribute name="cost" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="sell" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product"/>
+    </entity>
+    <entity name="Product" representedClassName=".Product" parentEntity="Record" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category"/>
     </entity>
+    <entity name="Record" representedClassName=".Record" syncable="YES">
+        <attribute name="createDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdBy" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedBy" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
-        <element name="Category" positionX="-63" positionY="-18" width="128" height="73"/>
-        <element name="Product" positionX="-144.24609375" positionY="-319.03125" width="143.30078125" height="88"/>
+        <element name="Category" positionX="-490.32421875" positionY="-197.19921875" width="128" height="58"/>
+        <element name="Product" positionX="-144.24609375" positionY="-319.03125" width="143.30078125" height="73"/>
+        <element name="Price" positionX="70.6015625" positionY="-263.5546875" width="128" height="88"/>
+        <element name="PriceHistory" positionX="-177.32421875" positionY="-27.8359375" width="128" height="88"/>
+        <element name="Record" positionX="-389.25" positionY="-56.78125" width="128" height="118"/>
     </elements>
 </model>

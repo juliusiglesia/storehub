@@ -1,5 +1,5 @@
 //
-//  ProductsView.swift
+//  ProductsListView.swift
 //  storehub
 //
 //  Created by Julius Iglesia on 28/12/2019.
@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct ProductsListView: View {
-    @EnvironmentObject var categoryDataManager: CategoryDataManager
-    @EnvironmentObject var productDataManager: ProductDataManager
+    @EnvironmentObject var storeHubData: StoreHubDataManager
     
     @State private var showAddProductsView = false
     
@@ -18,12 +17,12 @@ struct ProductsListView: View {
         ZStack {
             NavigationView {
                 List {
-                    ForEach(self.productDataManager.products, id: \.self) { product in
-                        NavigationLink (destination: Text(product.wrappedName)) {
+                    ForEach(self.storeHubData.productCatalog, id: \.self) { productCatalog in
+                        NavigationLink (destination: Text(productCatalog.product.wrappedName)) {
                             VStack(alignment: .leading) {
-                                Text(product.wrappedName)
+                                Text(productCatalog.product.wrappedName)
                                 Text("99 stocks available").foregroundColor(Color.gray)
-                                Text("₱ 99.50 per stock").foregroundColor(Color.gray)
+                                Text("₱\(productCatalog.price?.sell.decimalString ?? "??") per stock").foregroundColor(Color.gray)
                             }
                         }
                     }
@@ -41,8 +40,7 @@ struct ProductsListView: View {
             .sheet(isPresented: $showAddProductsView){
                 Modal {
                     AddProductsView()
-                        .environmentObject(self.categoryDataManager)
-                        .environmentObject(self.productDataManager)
+                        .environmentObject(self.storeHubData)
                 }
             }
         }

@@ -11,8 +11,7 @@ import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    var categoryDataManager = CategoryDataManager()
-    var productDataManager = ProductDataManager()
+    var storeHubData = StoreHubDataManager()
     
     var window: UIWindow?
     
@@ -28,8 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         let contentView = ContentView()
             .environment(\.managedObjectContext, context)
-            .environmentObject(categoryDataManager)
-            .environmentObject(productDataManager)
+            .environmentObject(storeHubData)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

@@ -1,5 +1,5 @@
 //
-//  ModalView.swift
+//  Modal.swift
 //  storehub
 //
 //  Created by Julius Iglesia on 29/12/2019.

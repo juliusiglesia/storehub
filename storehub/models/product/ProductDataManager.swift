@@ -14,7 +14,7 @@ import Combine
 class ProductDataManager: ObservableObject {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    @Published var products: Array<Product> = []
+    @Published var data: Array<Product> = []
     
     init() {
         refresh()
@@ -22,23 +22,26 @@ class ProductDataManager: ObservableObject {
     
     func refresh() {
         do {
-            self.products = try context.fetch(Product.getAllProductsRequest())
+            self.data = try context.fetch(Product.getAllProductsRequest())
         } catch {
             print("Error fetching products, \(error)")
         }
     }
     
-    func add(name: String, category: Category?) {
+    func add(name: String, category: Category?) throws -> Product {
         let product = Product(context: context)
-        product.id = UUID().uuidString
         product.name = name
         product.category = category
+        product.setCreateTimestamp()
         
-        do {
-            try context.save()
-            refresh()
-        } catch {
-            print("Error saving product, \(String(describing: category))")
-        }
+        try? context.save()
+        refresh()
+        return product
+    }
+    
+    func get(id: String) -> Product? {
+        return self.data.filter {
+            $0.wrappedId == id
+        }.first
     }
 }

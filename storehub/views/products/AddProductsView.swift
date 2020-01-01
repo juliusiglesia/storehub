@@ -10,8 +10,7 @@ import SwiftUI
 import CoreData
 
 struct AddProductsView: View {
-    @EnvironmentObject var categoryDataManager: CategoryDataManager
-    @EnvironmentObject var productDataManager: ProductDataManager
+    @EnvironmentObject var storeHubData: StoreHubDataManager
     
     @State private var name = ""
     @State private var category: ListPickerOption = .init(id: "", label: "")
@@ -19,17 +18,52 @@ struct AddProductsView: View {
     @ObservedObject private var costPrice = DecimalValue()
     @ObservedObject private var sellPrice = DecimalValue()
     
-    private var currencyFormatter: NumberFormatter = {
-        let f = NumberFormatter()
-        f.numberStyle = .decimal
-        return f
-    }()
+    // Derived values
+    private var isFormValid: Bool {
+        ![ self.name, self.category.id, self.noOfStocks.value, self.costPrice.value, self.sellPrice.value ].isAnyEmpty
+    }
+    
+    private var profitOrLossAmt: Double { sellPrice.number - costPrice.number }
+    
+    private var profitOrLossPct: Double { 100 * (sellPrice.number - costPrice.number) / costPrice.number }
+    
+    private var profitOrLossText: String {
+        if costPrice.value.isEmpty || sellPrice.value.isEmpty {
+            return "Enter cost and selling price to see potential earnings."
+        }
+        
+        if profitOrLossAmt > 0 {
+            return "Your expected earning is +₱\(profitOrLossAmt.decimalString) (+\(profitOrLossPct.decimalString)%) per stock."
+        }
+        
+        if profitOrLossAmt < 0 {
+            return "Your expected earning is -₱\(abs(profitOrLossAmt).decimalString) (-\(abs(profitOrLossPct).decimalString)%) per stock."
+        }
+        
+        return "You are just break-even for this product."
+    }
+    
+    private var profitOrLossTextColor: Color {
+        if costPrice.value.isEmpty || sellPrice.value.isEmpty {
+            return Color.yellow
+        }
+        
+        if profitOrLossAmt > 0 {
+            return Color.green
+        }
+        
+        if profitOrLossAmt < 0 {
+            return Color.red
+        }
+        
+        return Color.blue
+    }
     
     var body: some View {
         Form {
             Section(header: Text("Product Information")) {
                 TextField("Product name", text: $name)
-                ListPicker(selected: $category,  options: self.$categoryDataManager.pickerOptions, label: "Category")
+                ListPicker(selected: $category,  options: self.$storeHubData.managers.category.pickerOptions, label: "Category")
                 HStack {
                     TextField("Number of stocks available", text: $noOfStocks.value).keyboardType(.numberPad)
                     Spacer()
@@ -52,24 +86,29 @@ struct AddProductsView: View {
                 }
                 HStack {
                     Image(systemName: "info.circle")
-                    Text("XX.XX% or ₱ XX.00 is the expected earning per stock")
+                    Text(profitOrLossText)
                 }
-                .foregroundColor(Color.blue)
+                .foregroundColor(profitOrLossTextColor)
                 .font(.system(size: 12, weight: .medium))
             }
             
             Section {
                 Button(action: {
-                    self.productDataManager.add(name: self.name, category: self.categoryDataManager.get(id: self.category.id))
-                    print(self.productDataManager.products)
+                    do {
+                        let category = self.storeHubData.managers.category.get(id: self.category.id)
+                        let product = try self.storeHubData.managers.product.add(name: self.name, category: category)
+                        try self.storeHubData.managers.price.save(product: product, cost: self.costPrice.number, sell: self.sellPrice.number)
+                    } catch {
+                        print("Error saving product")
+                    }
                 }) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                         Text("Save Product")
                     }
-                    .disabled(name.isEmpty)
+                    .disabled(!isFormValid)
                 }
-                .disabled(name.isEmpty)
+                .disabled(!isFormValid)
             }
         }
         .navigationBarTitle(Text("Add Product"))
