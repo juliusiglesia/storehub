@@ -21,8 +21,8 @@ struct ProductsListView: View {
                         NavigationLink (destination: Text(productCatalog.product.wrappedName)) {
                             VStack(alignment: .leading) {
                                 Text(productCatalog.product.wrappedName)
+                                Text("₱\(productCatalog.price?.sell.money ?? "??") per stock").foregroundColor(Color.gray)
                                 Text("99 stocks available").foregroundColor(Color.gray)
-                                Text("₱\(productCatalog.price?.sell.decimalString ?? "??") per stock").foregroundColor(Color.gray)
                             }
                         }
                     }

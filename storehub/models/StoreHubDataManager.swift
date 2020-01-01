@@ -23,17 +23,22 @@ class StoreHubDataManager: ObservableObject {
             product: ProductDataManager()
         )
         
-        refresh()
+        self.refresh()
         
         self.subscriptions = [
-            self.managers.category.$data.sink { _ in self.refresh() },
-            self.managers.price.$data.sink { _ in self.refresh() },
-            self.managers.product.$data.sink { _ in self.refresh() }
+            self.managers.category.$data.sink { _ in self.asyncRefresh() },
+            self.managers.price.$data.sink { _ in self.asyncRefresh() },
+            self.managers.product.$data.sink { _ in self.asyncRefresh() }
         ]
     }
     
+    internal func asyncRefresh() {
+        DispatchQueue.main.async {
+            self.refresh()
+        }
+    }
+    
     internal func refresh() {
-        print("update")
         self.productCatalog = self.managers.product.data.map {
             let price = self.managers.price.getByProduct(product: $0)
             return ProductCatalog(product: $0, price: price)

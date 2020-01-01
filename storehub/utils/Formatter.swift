@@ -9,7 +9,14 @@
 import Foundation
 
 class Formatter {
-    private static var formatter: NumberFormatter = {
+    private static var currencyFormatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.numberStyle = .currency
+        f.currencySymbol = ""
+        return f
+    }()
+    
+    private static var decimalFormatter: NumberFormatter = {
         let f = NumberFormatter()
         f.numberStyle = .decimal
         f.usesGroupingSeparator = true
@@ -18,7 +25,12 @@ class Formatter {
         return f
     }()
     
-    static func toString(num: Double) -> String {
-        return self.formatter.string(from: NSNumber(value: num)) ?? ""
+    
+    static func toMoneyString(num: Double) -> String {
+        return self.currencyFormatter.string(from: NSNumber(value: num)) ?? ""
+    }
+    
+    static func toDecimalString(num: Double) -> String {
+        return self.decimalFormatter.string(from: NSNumber(value: num)) ?? ""
     }
 }

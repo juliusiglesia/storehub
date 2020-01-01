@@ -33,11 +33,11 @@ struct AddProductsView: View {
         }
         
         if profitOrLossAmt > 0 {
-            return "Your expected earning is +₱\(profitOrLossAmt.decimalString) (+\(profitOrLossPct.decimalString)%) per stock."
+            return "Your expected earning is +₱\(profitOrLossAmt.money) (+\(profitOrLossPct.string)%) per stock."
         }
         
         if profitOrLossAmt < 0 {
-            return "Your expected earning is -₱\(abs(profitOrLossAmt).decimalString) (-\(abs(profitOrLossPct).decimalString)%) per stock."
+            return "Your expected earning is -₱\(abs(profitOrLossAmt).money) (-\(abs(profitOrLossPct).string)%) per stock."
         }
         
         return "You are just break-even for this product."

@@ -9,7 +9,11 @@
 import Foundation
 
 extension Double {
-    var decimalString: String {
-        Formatter.toString(num: self)
+    var money: String {
+        Formatter.toMoneyString(num: self)
+    }
+    
+    var string: String {
+        Formatter.toDecimalString(num: self)
     }
 }
